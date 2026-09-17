@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  position: relative;
+}
+
+/* Fixed grain layer, kept off the scrolling container for performance */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: theme("backgroundImage.grain");
+  pointer-events: none;
+  z-index: 60;
+  mix-blend-mode: overlay;
+}
+
+::selection {
+  background: #e3a33e;
+  color: #14161a;
+}
+
+:focus-visible {
+  outline: 2px solid #e3a33e;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+img {
+  outline: 1px solid rgba(236, 234, 228, 0.1);
+  outline-offset: -1px;
+}
+
+.hero-line {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-line[data-in="true"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+.reveal.in {
+  animation: reveal-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes reveal-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
